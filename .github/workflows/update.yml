@@ -1,0 +1,28 @@
+name: Update Zotero Publications
+
+on:
+  schedule:
+    - cron: "0 0 */14 * *"   # every 14 days
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+      - run: node scripts/update-pubs.js
+
+      - run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add index.html
+          git commit -m "Auto-update Zotero pubs" || echo "No changes"
+          git push
