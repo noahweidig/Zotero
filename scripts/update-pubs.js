@@ -1,7 +1,7 @@
 import fs from "fs";
 import fetch from "node-fetch";
 
-const indexPath = "./index.html";
+const indexPath = "./index.html"; 
 const userID = 11988712;
 
 const url =
